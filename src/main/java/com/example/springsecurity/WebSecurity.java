@@ -15,17 +15,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                .withUser("user")
-                .password(passwordEncoder().encode("pass"))
-                .roles("USER");
+                .withUser("user").password(passwordEncoder().encode("pass")).roles("USER")
+                .and()
+                .withUser("manager").password(passwordEncoder().encode("manager")).roles("MANAGER")
+                .and()
+                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/index").permitAll()
+                .antMatchers("/profile/**").authenticated()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/management/**").hasAnyRole("MANAGER")
                 .and()
                 .httpBasic();
     }
