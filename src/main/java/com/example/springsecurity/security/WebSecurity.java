@@ -33,10 +33,13 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/management/**").hasRole("MANAGER")
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginProcessingUrl("/signin")
+                .loginPage("/login").usernameParameter("txtUsername").passwordParameter("txtPassword")
                 .permitAll()
                 .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
+                .and()
+                .rememberMe().tokenValiditySeconds(2592000).key("mySecret").rememberMeParameter("checkRememberMe");
     }
 
     @Bean
