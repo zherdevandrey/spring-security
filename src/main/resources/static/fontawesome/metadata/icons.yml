@@ -3182,7 +3182,7 @@ concierge-bell:
     terms:
       - attention
       - hotel
-      - service
+      - security
       - support
   styles:
     - solid
@@ -12753,7 +12753,7 @@ taxi:
       - cab
       - cabbie
       - car
-      - car service
+      - car security
       - lyft
       - machine
       - transportation
